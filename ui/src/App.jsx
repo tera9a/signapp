@@ -3,7 +3,7 @@ import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import Welcome from './pages/Welcome'
 
-export const API_URL = 'http://localhost:8080'
+export const API_URL = 'http://13.60.85.141:8080'
 
 export default function App() {
   return (
