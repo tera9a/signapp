@@ -28,7 +28,7 @@ export default function SignUp() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Xəta baş verdi.')
-      setSuccess('Qeydiyyat uğurlu! Giriş səhifəsinə yönləndirilirsiniz...')
+      setSuccess('Qeydiyyat uğurlu! Yönləndirilirsiniz...')
       setTimeout(() => navigate('/signin'), 1800)
     } catch (e) {
       setError(e.message)
@@ -37,34 +37,47 @@ export default function SignUp() {
     }
   }
 
+  const s = {
+    page: { minHeight:'100vh', background:'#f8f8ff', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'sans-serif', padding:'20px' },
+    card: { background:'#fff', borderRadius:'12px', border:'0.5px solid #e8e8f0', padding:'36px', width:'100%', maxWidth:'420px', boxShadow:'0 4px 24px rgba(127,119,221,0.08)' },
+    bar: { height:'4px', borderRadius:'4px', background:'linear-gradient(90deg,#7F77DD,#D4537E,#EF9F27)', marginBottom:'28px' },
+    title: { fontSize:'22px', fontWeight:'500', color:'#1a1a2e', marginBottom:'4px' },
+    sub: { fontSize:'13px', color:'#888', marginBottom:'28px' },
+    label: { display:'block', fontSize:'11px', fontWeight:'500', background:'linear-gradient(135deg,#7F77DD,#D4537E)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', letterSpacing:'.12em', textTransform:'uppercase', marginBottom:'6px' },
+    input: { width:'100%', padding:'10px 14px', borderRadius:'8px', border:'0.5px solid #e0e0f0', background:'#f8f8ff', color:'#1a1a2e', fontSize:'14px', outline:'none', boxSizing:'border-box', marginBottom:'16px' },
+    btn: { width:'100%', padding:'11px', borderRadius:'8px', border:'none', background:'linear-gradient(135deg,#7F77DD,#D4537E)', color:'#fff', fontSize:'14px', fontWeight:'500', cursor:'pointer', marginTop:'8px' },
+    error: { background:'#fff0f0', border:'0.5px solid #ffcccc', borderRadius:'8px', padding:'10px 14px', color:'#cc4444', fontSize:'13px', marginBottom:'16px' },
+    success: { background:'#f0fff4', border:'0.5px solid #ccffdd', borderRadius:'8px', padding:'10px 14px', color:'#44aa66', fontSize:'13px', marginBottom:'16px' },
+    link: { textAlign:'center', marginTop:'16px', fontSize:'13px', color:'#888' }
+  }
+
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0f', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif' }}>
-      <div style={{ background: '#111118', border: '1px solid #2a2a3a', borderRadius: '8px', padding: '48px', width: '100%', maxWidth: '420px' }}>
-        <h1 style={{ color: '#f0f0ff', marginBottom: '8px' }}>Qeydiyyat</h1>
-        <p style={{ color: '#555566', marginBottom: '24px' }}>Yeni hesab yarat</p>
+    <div style={s.page}>
+      <div style={s.card}>
+        <div style={s.bar} />
+        <h2 style={s.title}>Hesab yarat</h2>
+        <p style={s.sub}>Bir neçə saniyədə qeydiyyatdan keç</p>
 
-        {error && <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '4px', padding: '12px', color: '#f87171', marginBottom: '16px' }}>{error}</div>}
-        {success && <div style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: '4px', padding: '12px', color: '#4ade80', marginBottom: '16px' }}>{success}</div>}
+        {error && <div style={s.error}>{error}</div>}
+        {success && <div style={s.success}>{success}</div>}
 
-        <label style={{ color: '#aaa', fontSize: '13px' }}>İstifadəçi adı</label>
-        <input style={{ width: '100%', background: '#0d0d14', border: '1px solid #2a2a3a', borderRadius: '4px', padding: '10px', color: '#fff', marginBottom: '16px', boxSizing: 'border-box' }} name="username" placeholder="john_doe" value={form.username} onChange={handleChange} />
+        <label style={s.label}>İstifadəçi adı</label>
+        <input style={s.input} name="username" placeholder="john_doe" value={form.username} onChange={handleChange} />
 
-        <label style={{ color: '#aaa', fontSize: '13px' }}>Email</label>
-        <input style={{ width: '100%', background: '#0d0d14', border: '1px solid #2a2a3a', borderRadius: '4px', padding: '10px', color: '#fff', marginBottom: '16px', boxSizing: 'border-box' }} name="email" type="email" placeholder="john@example.com" value={form.email} onChange={handleChange} />
+        <label style={s.label}>Email</label>
+        <input style={s.input} name="email" type="email" placeholder="john@example.com" value={form.email} onChange={handleChange} />
 
-        <label style={{ color: '#aaa', fontSize: '13px' }}>Şifrə</label>
-        <input style={{ width: '100%', background: '#0d0d14', border: '1px solid #2a2a3a', borderRadius: '4px', padding: '10px', color: '#fff', marginBottom: '16px', boxSizing: 'border-box' }} name="password" type="password" placeholder="••••••••" value={form.password} onChange={handleChange} />
+        <label style={s.label}>Şifrə</label>
+        <input style={s.input} name="password" type="password" placeholder="Minimum 6 simvol" value={form.password} onChange={handleChange} />
 
-        <label style={{ color: '#aaa', fontSize: '13px' }}>Şifrəni təsdiqlə</label>
-        <input style={{ width: '100%', background: '#0d0d14', border: '1px solid #2a2a3a', borderRadius: '4px', padding: '10px', color: '#fff', marginBottom: '24px', boxSizing: 'border-box' }} name="confirmPassword" type="password" placeholder="••••••••" value={form.confirmPassword} onChange={handleChange} />
+        <label style={s.label}>Şifrəni təsdiqlə</label>
+        <input style={{ ...s.input, marginBottom: 0 }} name="confirmPassword" type="password" placeholder="Şifrəni təkrarla" value={form.confirmPassword} onChange={handleChange} />
 
-        <button style={{ width: '100%', background: '#6366f1', border: 'none', borderRadius: '4px', padding: '12px', color: '#fff', fontSize: '15px', fontWeight: '700', cursor: 'pointer' }} onClick={handleSubmit} disabled={loading}>
-          {loading ? 'Gözləyin...' : 'Qeydiyyatdan keç'}
+        <button style={s.btn} onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Gözləyin...' : 'Davam et →'}
         </button>
 
-        <p style={{ marginTop: '16px', textAlign: 'center', color: '#555566', fontSize: '13px' }}>
-          Artıq hesabınız var? <Link to="/signin" style={{ color: '#6366f1' }}>Daxil olun</Link>
-        </p>
+        <p style={s.link}>Artıq hesabınız var? <Link to="/signin" style={{ color:'#7F77DD', fontWeight:'500' }}>Daxil olun</Link></p>
       </div>
     </div>
   )
